@@ -23,11 +23,10 @@ filelist = [filepath + f for f in os.listdir(filepath)]
 dims=[]
 for i in filelist:
     if os.path.split(i)[-1].split('.')[-1] !='jpg':
-        print(i)
         continue
     dims.append(get_dims(i))
 dim_df = pd.DataFrame(dims, columns=['height', 'width'])
-dim_df.head()
+print(dim_df.head())
 sizes = dim_df.groupby(['height', 'width']).size().reset_index().rename(columns={0:'count'})
 sizes.hvplot.scatter(x='height', y='width', size='count', xlim=(0,1200), ylim=(0,1200), grid=True, xticks=2, 
         yticks=2, height=500, width=600).options(scaling_factor=0.1, line_alpha=1, fill_alpha=0)
